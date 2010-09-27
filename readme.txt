@@ -1,0 +1,1 @@
+This project is used to expirement with methods to test user experience in a winforms application, when running long running tasks in the background.
