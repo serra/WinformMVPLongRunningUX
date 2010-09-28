@@ -70,7 +70,6 @@ namespace Serra.Micros.MVP.Presenters
         /// </remarks>
         private void UpdateViewWith(Item[] newItems)
         {
-            //_view.AddResults(newItems);
             _syncCtxt.Post(state => _view.AddResults(newItems), newItems);
         }
 
