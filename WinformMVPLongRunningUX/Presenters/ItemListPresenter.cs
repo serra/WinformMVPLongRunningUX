@@ -46,8 +46,9 @@ namespace Serra.Micros.MVP.Presenters
         /// </summary>
         private void LoadItems()
         {
+            // I don't like these next three lines: 
 #if DEBUG
-            Thread.Sleep(5000);
+            Thread.Sleep(2500);
 #endif
             UpdateViewWith(GetItems());
             SetReady();
