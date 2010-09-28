@@ -36,7 +36,7 @@ namespace Serra.Micros.MVP.Presenters
 
         public void Start()
         {
-            SetReadyToStartNewSession();
+            SetReady();
         }
 
         #endregion
@@ -50,7 +50,7 @@ namespace Serra.Micros.MVP.Presenters
             Thread.Sleep(5000);
 #endif
             UpdateViewWith(GetItems());
-            SetReadyToStartNewSession();
+            SetReady();
         }
 
         private Item[] GetItems()
@@ -63,6 +63,7 @@ namespace Serra.Micros.MVP.Presenters
             return items.ToArray();
         }
 
+        #region View update methods
         /// <remarks>
         /// Synchronizes the view update to _syncCtxt.
         /// </remarks>
@@ -80,14 +81,21 @@ namespace Serra.Micros.MVP.Presenters
             _syncCtxt.Post(state => _view.ShowBusy(), null);
         }
 
+        /// <remarks>
+        /// Synchronizes the view update to _syncCtxt.
+        /// </remarks>
         private void ClearResults()
         {
             _syncCtxt.Post(state => _view.ClearResults(), null);
         }
 
-        private void SetReadyToStartNewSession()
+        /// <remarks>
+        /// Synchronizes the view update to _syncCtxt.
+        /// </remarks>
+        private void SetReady()
         {
             _syncCtxt.Post(state => _view.SetReady(), null);
         }
+        #endregion
     }
 }
