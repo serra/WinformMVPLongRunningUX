@@ -41,6 +41,7 @@
             this.startLoadingButton.TabIndex = 0;
             this.startLoadingButton.Text = "Start loading";
             this.startLoadingButton.UseVisualStyleBackColor = true;
+            this.startLoadingButton.Click += new System.EventHandler(this.startLoadingButton_Click);
             // 
             // itemLlistBox
             // 

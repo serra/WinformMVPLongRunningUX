@@ -4,7 +4,8 @@ namespace Serra.Micros.MVP.Interfaces
 {
     internal interface IItemListView
     {
-        void ShowProgress(int progress, int progressMax);
+        void ShowBusy();
+        void ClearResults();
         void AddResults(Item[] itemsToAdd);
         void ShowStartOfNewSession();
         void SetReadyToStartSession();

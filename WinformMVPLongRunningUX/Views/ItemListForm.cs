@@ -27,9 +27,15 @@ namespace Serra.Micros.MVP.Views
             _presenter.Start();
         }
 
-        public void ShowProgress(int progress, int progressMax)
+        public void ShowBusy()
         {
-            throw new NotImplementedException();
+            Text = string.Format("Busy");
+            startLoadingButton.Enabled = false;
+        }
+
+        public void ClearResults()
+        {
+            itemLlistBox.Items.Clear();
         }
 
         public void AddResults(Item[] itemsToAdd)
@@ -39,12 +45,19 @@ namespace Serra.Micros.MVP.Views
 
         public void ShowStartOfNewSession()
         {
-            throw new NotImplementedException();
+            startLoadingButton.Text = @"Start new";
+            startLoadingButton.Enabled = true;
         }
 
         public void SetReadyToStartSession()
         {
             startLoadingButton.Enabled = true;
+            startLoadingButton.Text = @"Start";
+        }
+
+        private void startLoadingButton_Click(object sender, EventArgs e)
+        {
+            _presenter.StartLoadingItemsSession();
         }
     }
 }

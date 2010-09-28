@@ -11,7 +11,7 @@ namespace Serra.Micros.MVP.Interfaces
         /// Start a new loading session.
         /// Discards any running sessions.
         /// </summary>
-        void StartLoadingItemsSessions();
+        void StartLoadingItemsSession();
 
         /// <summary>
         /// Flag that the view is ready get calls from the presenters.
