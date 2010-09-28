@@ -1,10 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using Serra.Micros.MVP.Interfaces;
 using Serra.Micros.MVP.Model;
@@ -14,22 +8,18 @@ namespace Serra.Micros.MVP.Views
 {
     public partial class ItemListForm : Form, IItemListView
     {
+        private IItemListPresenter _presenter;
+
         public ItemListForm()
         {
             InitializeComponent();
         }
 
-        private IItemListPresenter _presenter;
-
-        private void ItemListForm_Load(object sender, EventArgs e)
-        {
-            _presenter = new ItemListPresenter(this);
-            _presenter.Start();
-        }
+        #region IItemListView Members
 
         public void ShowBusy()
         {
-            Text = string.Format("Busy");
+            Text = @"Busy ...";
             startLoadingButton.Enabled = false;
         }
 
@@ -40,22 +30,24 @@ namespace Serra.Micros.MVP.Views
 
         public void AddResults(Item[] itemsToAdd)
         {
-            throw new NotImplementedException();
+            itemLlistBox.Items.AddRange(itemsToAdd);
         }
 
-        public void ShowStartOfNewSession()
+        public void SetReady()
         {
-            startLoadingButton.Text = @"Start new";
+            Text = @"Ready";
             startLoadingButton.Enabled = true;
         }
 
-        public void SetReadyToStartSession()
+        #endregion
+
+        private void ItemListFormLoad(object sender, EventArgs e)
         {
-            startLoadingButton.Enabled = true;
-            startLoadingButton.Text = @"Start";
+            _presenter = new ItemListPresenter(this);
+            _presenter.Start();
         }
 
-        private void startLoadingButton_Click(object sender, EventArgs e)
+        private void StartLoadingButtonClick(object sender, EventArgs e)
         {
             _presenter.StartLoadingItemsSession();
         }

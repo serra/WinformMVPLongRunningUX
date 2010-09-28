@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading;
 using Serra.Micros.MVP.Interfaces;
 using Serra.Micros.MVP.Model;
@@ -8,8 +7,8 @@ namespace Serra.Micros.MVP.Presenters
 {
     internal class ItemListPresenter : IItemListPresenter
     {
-        private IItemListView _view;
-        private SynchronizationContext _syncCtxt;
+        private readonly SynchronizationContext _syncCtxt;
+        private readonly IItemListView _view;
 
         /// <summary>
         /// 
@@ -25,24 +24,33 @@ namespace Serra.Micros.MVP.Presenters
             _syncCtxt = SynchronizationContext.Current; // let's assume we're constructed from the UI thread.
         }
 
+        #region IItemListPresenter Members
+
         public void StartLoadingItemsSession()
         {
-            _view.ShowStartOfNewSession();
-            _view.ClearResults();
-            Thread t = new Thread(LoadItems);
+            ShowBusy();
+            ClearResults();
+            var t = new Thread(LoadItems);
             t.Start();
         }
+
+        public void Start()
+        {
+            SetReadyToStartNewSession();
+        }
+
+        #endregion
 
         /// <summary>
         /// Gets items and updates the view.
         /// </summary>
         private void LoadItems()
         {
-            // call getitems
-            UpdateViewWith(GetItems());
 #if DEBUG
-            Thread.Sleep(1000);
+            Thread.Sleep(5000);
 #endif
+            UpdateViewWith(GetItems());
+            SetReadyToStartNewSession();
         }
 
         private Item[] GetItems()
@@ -50,7 +58,7 @@ namespace Serra.Micros.MVP.Presenters
             var items = new List<Item>();
 
             for (int i = 1; i < 100; i++)
-                items.Add(new Item() {SequenceNumber = i, Name = string.Format("item {0:0000}", i)});
+                items.Add(new Item {SequenceNumber = i, Name = string.Format("item {0:0000}", i)});
 
             return items.ToArray();
         }
@@ -63,6 +71,7 @@ namespace Serra.Micros.MVP.Presenters
             //_view.AddResults(newItems);
             _syncCtxt.Post(state => _view.AddResults(newItems), newItems);
         }
+
         /// <remarks>
         /// Synchronizes the view update to _syncCtxt.
         /// </remarks>        
@@ -71,9 +80,14 @@ namespace Serra.Micros.MVP.Presenters
             _syncCtxt.Post(state => _view.ShowBusy(), null);
         }
 
-        public void Start()
+        private void ClearResults()
         {
-            _view.SetReadyToStartSession();
+            _syncCtxt.Post(state => _view.ClearResults(), null);
+        }
+
+        private void SetReadyToStartNewSession()
+        {
+            _syncCtxt.Post(state => _view.SetReady(), null);
         }
     }
 }

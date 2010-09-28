@@ -41,7 +41,7 @@
             this.startLoadingButton.TabIndex = 0;
             this.startLoadingButton.Text = "Start loading";
             this.startLoadingButton.UseVisualStyleBackColor = true;
-            this.startLoadingButton.Click += new System.EventHandler(this.startLoadingButton_Click);
+            this.startLoadingButton.Click += new System.EventHandler(this.StartLoadingButtonClick);
             // 
             // itemLlistBox
             // 
@@ -63,7 +63,7 @@
             this.Controls.Add(this.startLoadingButton);
             this.Name = "ItemListForm";
             this.Text = "ItemListForm";
-            this.Load += new System.EventHandler(this.ItemListForm_Load);
+            this.Load += new System.EventHandler(this.ItemListFormLoad);
             this.ResumeLayout(false);
 
         }
