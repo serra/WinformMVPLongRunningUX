@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using Serra.Micros.MVP.Infra;
 using Serra.Micros.MVP.Views;
 
 namespace Serra.Micros.MVP
@@ -14,7 +15,10 @@ namespace Serra.Micros.MVP
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new ItemListForm());
+            var mngr = new SecondDelayQueuedCommandManager();
+            mngr.Start();
+            Application.Run(new ItemListForm(mngr));
+            mngr.Stop();
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
+using Serra.Micros.MVP.Infra;
 using Serra.Micros.MVP.Interfaces;
 using Serra.Micros.MVP.Model;
 
@@ -9,18 +10,19 @@ namespace Serra.Micros.MVP.Presenters
     {
         private readonly SynchronizationContext _syncCtxt;
         private readonly IItemListView _view;
+        private readonly ICommandManager _mngr;
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="itemListView"></param>
         /// <remarks>
         /// It is assumed that the presenter is created from the thread,
         /// to which view-calls should be synchronized.
         /// </remarks>
-        public ItemListPresenter(IItemListView itemListView)
+        public ItemListPresenter(IItemListView itemListView, ICommandManager cmdManager)
         {
             _view = itemListView;
+            _mngr = cmdManager;
             _syncCtxt = SynchronizationContext.Current; // let's assume we're constructed from the UI thread.
         }
 
@@ -30,8 +32,8 @@ namespace Serra.Micros.MVP.Presenters
         {
             ShowBusy();
             ClearResults();
-            var t = new Thread(LoadItems);
-            t.Start();
+
+            _mngr.Post(LoadItems);
         }
 
         public void Start()
@@ -46,10 +48,6 @@ namespace Serra.Micros.MVP.Presenters
         /// </summary>
         private void LoadItems()
         {
-            // I don't like these next three lines: 
-#if DEBUG
-            Thread.Sleep(2500);
-#endif
             UpdateViewWith(GetItems());
             SetReady();
         }
