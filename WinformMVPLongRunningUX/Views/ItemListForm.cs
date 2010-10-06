@@ -10,9 +10,9 @@ namespace Serra.Micros.MVP.Views
     public partial class ItemListForm : Form, IItemListView
     {
         private IItemListPresenter _presenter;
-        private ICommandManager _cmdMngr;
+        private IActionManager _cmdMngr;
 
-        public ItemListForm(ICommandManager mngr)
+        public ItemListForm(IActionManager mngr)
         {
             _cmdMngr = mngr;
             InitializeComponent();

@@ -15,7 +15,7 @@ namespace Serra.Micros.MVP
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            var mngr = new SecondDelayQueuedCommandManager();
+            var mngr = new SecondDelayQueuedActionManager();
             mngr.Start();
             Application.Run(new ItemListForm(mngr));
             mngr.Stop();

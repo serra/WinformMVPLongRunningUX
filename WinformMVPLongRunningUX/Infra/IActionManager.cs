@@ -2,7 +2,7 @@
 
 namespace Serra.Micros.MVP.Infra
 {
-    public interface ICommandManager
+    public interface IActionManager
     {
         void Post(Action action);
     }

@@ -10,7 +10,7 @@ namespace Serra.Micros.MVP.Presenters
     {
         private readonly SynchronizationContext _syncCtxt;
         private readonly IItemListView _view;
-        private readonly ICommandManager _mngr;
+        private readonly IActionManager _mngr;
 
         /// <summary>
         /// 
@@ -19,7 +19,7 @@ namespace Serra.Micros.MVP.Presenters
         /// It is assumed that the presenter is created from the thread,
         /// to which view-calls should be synchronized.
         /// </remarks>
-        public ItemListPresenter(IItemListView itemListView, ICommandManager cmdManager)
+        public ItemListPresenter(IItemListView itemListView, IActionManager cmdManager)
         {
             _view = itemListView;
             _mngr = cmdManager;

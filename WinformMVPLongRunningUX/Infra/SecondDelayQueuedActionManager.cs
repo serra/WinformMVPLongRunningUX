@@ -10,7 +10,7 @@ namespace Serra.Micros.MVP.Infra
     /// <remarks>
     /// Quick&dirty busy-waiting implementation.
     /// </remarks>
-    public class SecondDelayQueuedCommandManager : ICommandManager
+    public class SecondDelayQueuedActionManager : IActionManager
     {
         private readonly object _lock = new object();
         private readonly Queue<Action> _q = new Queue<Action>();
