@@ -28,8 +28,7 @@ namespace Serra.Micros.MVP.Infra
             if (_run)
                 return;
             _run = true;
-            var t = new Thread(Run);
-            t.Name = "Command Manager's workerthread.";
+            var t = new Thread(Run) {Name = "Command Manager's workerthread."};
             t.Start();
         }
 
